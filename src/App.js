@@ -8,7 +8,8 @@ import Filter from "./components/Filter/Filter";
 
 class App extends React.Component {
   state = {
-    contacts: contacts,
+    // contacts: contacts,
+    contacts: [],
     filter: '',
   };
   
@@ -36,6 +37,21 @@ class App extends React.Component {
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter));
+  };
+
+  componentDidMount() {
+    // console.log(localStorage.getItem('contacts') === null); 
+    const data = localStorage.getItem('contacts');
+    const parseddata = JSON.parse(data);
+    // console.log(parseddata !== true); 
+    if (localStorage.getItem('contacts') === null) {
+      // console.log('not data in localstoredge');
+      this.setState({ contacts: contacts });
+    };
+    
+    if (parseddata !== true) {
+      this.setState({ contacts: parseddata });
+    };
   };
   
   componentDidUpdate(prevProps, prevState) {
